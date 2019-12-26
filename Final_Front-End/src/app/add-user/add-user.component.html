@@ -1,0 +1,65 @@
+<div>
+  <h3>User Manager</h3>
+</div>
+<form  [formGroup]="addUserForm"  (ngSubmit)="onSubmit()">
+        <div class="row" style="    padding-left: 25px;" *ngIf="showmsgVal">
+            <div class= "col-xs-12">
+              <p class="alert alert-success">
+                <strong>User {{ cret }} Successfully!!</strong>
+              </p>
+            </div>
+          </div>
+        <div class="form-group">
+          <label for="first_name">First Name*: </label>
+          <input type="text" class="form-control" id="first_name" 
+          formControlName='first_name' name="first_name" [(ngModel)]="first_name" 
+          [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name*: </label>
+            <input type="text" class="form-control" id="last_name" 
+            formControlName='last_name' name="last_name" [(ngModel)]="last_name" 
+        [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+        </div>
+        <div class="form-group">
+            <label for="employee_id">Employee Id*: </label>
+            <input type="text" class="form-control" id="employee_id" 
+            formControlName='employee_id' name="employee_id" [(ngModel)]="employee_id" 
+            [ngClass]="{ 'is-invalid': submitted && f.employee_id.errors }">
+        </div>
+        <button class="btn btn-default" type="submit" [disabled]="!addUserForm.valid">{{ uservall }} User</button>
+        <button class="btn btn-default" type="reset" (click)="rest()">Reset</button>
+    </form>
+
+    <div style="padding-top: 30px;">
+      <h3>
+        User Table
+      </h3>
+    </div>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Emnployee Id</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="users?.length != 0">
+            <tr *ngFor="let user of users">
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.employee_id }}</td>
+                <td><button class="btn btn-default" type="button"  
+                  (click)="editUser(user.uid)">Edit</button>
+                </td>
+                <td><button class="btn btn-default" type="button"  
+                  (click)="delete(user.uid)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="users?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>

@@ -1,0 +1,99 @@
+<!--<table datatable [dtOptions]="dtOptions" class="row-border hover">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Parent Name</th>
+      <th>Priority</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="tasks?.length != 0">
+      <tr *ngFor="let task of tasks">
+          <td>{{ task.task }}</td>
+          <td>{{ task.parentTaskName }}</td>
+          <td>{{ task.priority }}</td>
+          <td>{{ task.start_Date }}</td>
+          <td>{{ task.end_Date }}</td>
+      </tr>
+  </tbody>
+  <tbody *ngIf="tasks?.length == 0">
+    <tr>
+      <td colspan="3" class="no-data-available">No data!</td>
+    </tr>
+  <tbody>
+</table>-->
+<div>
+    <h3>View Task Manager</h3>
+  </div>
+<div>
+  <label for="task">Project*: </label>
+      <select (change)="onChange($event.target.value)" id="project_ID" 
+      [ngClass]="{ 'is-invalid': submitted && f.project_ID.errors }">
+        <option *ngFor="let pro of pros; let i = index" [value]="pros[i].pid">
+          {{pros[i].project}}
+        </option>
+      </select>
+</div>
+<div>
+  <h3 style="padding-top: 20px;">Task table</h3>
+</div>
+<table id="edbtable" datatable [dtOptions]="dtOptions" 
+[dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Parent Task Name</th>
+      <th>Priority</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Edit</th>
+      <th>End Task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{ task.task }}</td>
+      <td>{{ task.parentTaskName }}</td>
+      <td>{{ task.priority }}</td>
+      <td>{{ task.start_Date | date: 'dd-MM-yyyy'}}</td>
+      <td>{{ task.end_Date | date: 'dd-MM-yyyy'}}</td>
+      <td><button class="btn btn-default" type="button" [disabled]=task.end_Task (click)="editTask(task.task_ID)">Edit Task</button></td>
+      <td><button class="btn btn-default" type="button" [disabled]=task.end_Task (click)="onSubmitV(task.task_ID)">End Task</button></td>
+  </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th><input type="text" placeholder="Search Task Name" name="search task"/></th>
+      <th><input type="text" placeholder="Search Parent Task" name="search-parent task"/></th>
+      <th><input type="text" placeholder="Search Priority" name="search-priority"/></th>
+      <th><input type="text" placeholder="Search Start Date" name="search-start date"/></th>
+      <th><input type="text" placeholder="Search End Date" name="search-end date"/></th>
+    </tr>
+  </tfoot>
+  </table>
+
+  <div>
+    <h3 style="padding-top: 20px;">ParentTask table</h3>
+  </div>
+  <table id="ptttable" datatable [dtOptions]="dtOptions2" 
+[dtTrigger]="dtTrigger2" class="row-border hover">
+  <thead>
+    <tr>
+      <th>Parent Task</th>
+      <th>Parent Project Id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pttask of pttasks">
+      <td>{{ pttask.parent_Task }}</td>
+      <td>{{ pttask.parent_Pro_ID }}</td>
+</tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th><input type="text" placeholder="Search Parent Task Name" name="search parent task "/></th>
+      <th><input type="text" placeholder="Search Parent Task Id" name="search-parent task id"/></th>
+</tr>
+  </tfoot>
+  </table>

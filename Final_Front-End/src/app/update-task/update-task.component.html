@@ -1,0 +1,78 @@
+<div>
+    <h3>Update Task Manager</h3>
+  </div>
+<form  [formGroup]="updateTaskForm"  (ngSubmit)="onSubmit()">
+  <div class="row" style="    padding-left: 25px;" *ngIf="showmsgVal">
+      <div class= "col-xs-12">
+        <p class="alert alert-success">
+          <strong>Task Updated Successfully!!</strong>
+        </p>
+      </div>
+    </div>
+    <div>
+        <div class="text-danger" *ngIf="error.isError">
+            <p class="alert alert-success">
+                <strong> {{error.errorMessage}}</strong>
+            </p>
+        </div>
+      </div>
+  <div class="form-group">
+    <label for="project_ID">Project*: </label>
+    <select formControlName="project_ID" id="project_ID">
+      <option *ngFor="let pro of pros; let i = index" 
+      [value]="pros[i].pid">
+        {{pros[i].project}}
+      </option>
+    </select>
+    <!--<input type="text" class="form-control" id="project_ID" 
+    formControlName='project_ID' name="project_ID" [(ngModel)]="project_ID" >-->
+  </div>
+  <div class="form-group">
+    <label for="task">Task*: </label>
+    <input type="text" class="form-control" id="task" 
+    formControlName='task' name="task" [(ngModel)]="task" 
+    [ngClass]="{ 'is-invalid': submitted && f.task.errors }">
+    <div *ngIf="submitted && f.task.errors" class="invalid-feedback">
+      <div *ngIf="f.task.errors.required">Task Name is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+      <label for="priority">Priority: </label>
+      <ng5-slider style="width:500px;" [(value)]="priority" formControlName='priority'  [options]="options"></ng5-slider>
+  </div>
+  <div class="form-group">
+    <label for="parentTask">Parent Task*: </label>
+    <select formControlName="parentTask" id="parentTask"
+    [ngClass]="{ 'is-invalid': ptask && f.parentTask.errors }">
+      <option *ngFor="let pt of pts; let i = index" [value]="pts[i].parent_ID">
+        {{ pts[i].parent_Task }}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+      <label for="start_Date">Start Date*: </label>
+      <input type="date" class="form-control" id="start_Date" 
+      formControlName='start_Date' name="start_Date" 
+      [(ngModel)]="start_Date" 
+      [ngClass]="{ 'is-invalid': ptask && f.start_Date.errors }">
+  </div>
+  <div class="form-group">
+      <label for="end_Date">End Task*: </label>
+      <input type="date" class="form-control" id="end_Date" 
+      formControlName='end_Date' name="end_Date" 
+      [(ngModel)]="end_Date"
+      [ngClass]="{ 'is-invalid': ptask && f.end_Date.errors }">
+  </div>
+  <div class="form-group">
+    <label for="user">User*: </label>
+    <select formControlName="user_ID" id="user_ID"
+    [ngClass]="{ 'is-invalid': ptask && f.user_ID.errors }">
+      <option *ngFor="let user of users; let i = index" 
+      [value]="users[i].uid">
+        {{ users[i].first_name }}
+      </option>
+    </select>
+  </div>
+  <button class="btn btn-default" type="submit" [disabled]="!updateTaskForm.valid">Update Task</button>
+  <button class="btn btn-default" type="reset">Reset</button>
+</form>

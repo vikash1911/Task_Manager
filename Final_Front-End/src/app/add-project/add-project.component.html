@@ -1,0 +1,105 @@
+<div>
+    <h3>Project Manager</h3>
+  </div>
+<form  [formGroup]="addProjectForm"  (ngSubmit)="onSubmit()">
+        <div class="row" style="    padding-left: 25px;" *ngIf="showmsgVal">
+            <div class= "col-xs-12">
+              <p class="alert alert-success">
+                <strong>Project {{ cret }} Successfully!!</strong>
+              </p>
+            </div>
+        </div>
+        <div>
+          <div class="text-danger" *ngIf="error.isError">
+              <p class="alert alert-success">
+                  <strong> {{error.errorMessage}}</strong>
+              </p>
+          </div>
+        </div>
+          <div class="form-group">
+            <label for="project">Project*: </label>
+            <input type="text" class="form-control" id="project" 
+            formControlName='project' name="project" [(ngModel)]="project" 
+            [ngClass]="{ 'is-invalid': submitted && f.project.errors }">
+          </div>
+          <div class="form-group">
+            <label class="container"> 
+              <input type="checkbox" formControlName='theCheckbox' 
+              [(ngModel)]="theCheckbox"  data-md-icheck 
+              (change)="toggleVisibility($event)"/>
+                Set Start and End Date
+                <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="form-group">
+              <label for="pro_start_date">Start Date*: </label>
+              <input type="date" class="form-control" id="pro_start_date" 
+              formControlName='pro_start_date' name="pro_start_date" 
+              [(ngModel)]="pro_start_date" 
+              [ngClass]="{ 'is-invalid': submitted && f.pro_start_date.errors }">
+          </div>
+          <div class="form-group">
+              <label for="pro_end_date">End Task*: </label>
+              <input type="date" class="form-control" id="pro_end_date" 
+              formControlName='pro_end_date' name="pro_end_date" 
+              [(ngModel)]="pro_end_date"
+              [ngClass]="{ 'is-invalid': submitted && f.pro_end_date.errors }">
+          </div>
+          <div class="form-group">
+            <label for="pro_priority">Priority: </label>
+            <ng5-slider style="width:500px;" [(value)]="pro_priority" 
+            formControlName='pro_priority'  [options]="options"></ng5-slider>
+          </div>
+          <div class="form-group">
+            <label for="user">Manager*: </label>
+            <select formControlName="pro_user_id" id="pro_user_id"
+            [ngClass]="{ 'is-invalid': submitted && f.pro_user_id.errors }">
+              <option *ngFor="let user of users; let i = index" 
+              [value]="users[i].uid">
+                {{ users[i].first_name }}
+              </option>
+            </select>
+          </div>
+
+        <button class="btn btn-default" type="submit" [disabled]="!addProjectForm.valid">{{ updt }} Project</button>
+        <button class="btn btn-default" type="reset" (click)="reset()">Reset</button>
+    </form>
+
+    <div style="padding-top: 30px;">
+      <h3>
+        Projects Table
+      </h3>
+    </div>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Priority</th>
+            <th>Number of Tasks</th>
+            <th>Completed</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="projects?.length != 0">
+            <tr *ngFor="let project of projects">
+                <td>{{ project.project }}</td>
+                <td>{{ project.pro_start_date | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ project.pro_end_date | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ project.pro_priority }}</td>
+                <td>{{ numOfTask() }}</td>
+                <td>{{ proCompleted(project.pro_end_date) }}</td>
+                <td><button class="btn btn-default" type="button"  
+                  (click)="updatePro(project.pid)">Update</button>
+                </td>
+                <td><button class="btn btn-default" type="button"  
+                  (click)="suspend(project.pid)">Suspend</button>
+                </td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="projects?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        <tbody>
+      </table>
