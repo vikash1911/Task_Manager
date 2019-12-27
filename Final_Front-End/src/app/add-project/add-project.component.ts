@@ -81,7 +81,7 @@ export class AddProjectComponent implements OnInit {
       serverSide: true,
       processing: true,
       ajax: (dataTablesParameters: any, callback) => {
-        this.http.get('http://localhost:8080/getAllProjects')
+        this.http.get('http://localhost:8088/getAllProjects')
          .pipe(
             map(res => res.json())
          ).subscribe(data => {
@@ -141,7 +141,7 @@ export class AddProjectComponent implements OnInit {
 
   getvalll(vall:string){
     var sw = 0;
-    this.http.get('http://localhost:8080/getNumOfTasksById/'+vall)
+    this.http.get('http://localhost:8088/getNumOfTasksById/'+vall)
     .pipe(
        map(res => res.json())
     ).subscribe(data => {
@@ -153,7 +153,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   resetVal(){
-    this.http.get('http://localhost:8080/getAllProjects')
+    this.http.get('http://localhost:8088/getAllProjects')
          .pipe(
             map(res => res.json())
          ).subscribe(data => {
@@ -229,7 +229,7 @@ export class AddProjectComponent implements OnInit {
     this.addProjectForm.get('pro_start_date').enable();
     this.addProjectForm.get('pro_end_date').enable();
     alert(value);
-    this.http.get('http://localhost:8080/getProjectById/'+value)
+    this.http.get('http://localhost:8088/getProjectById/'+value)
          .pipe(
             map(res => res.json())
          ).subscribe(data => {
@@ -250,7 +250,7 @@ export class AddProjectComponent implements OnInit {
 
   numOfTask(id:number){
     var dd = 0;
-    /*this.http.get('http://localhost:8080/getNumOfTasksById/'+id)
+    /*this.http.get('http://localhost:8088/getNumOfTasksById/'+id)
          .pipe(
             map(res => res.json())
          ).subscribe(data => {

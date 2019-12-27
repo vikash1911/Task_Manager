@@ -65,7 +65,7 @@ export class AddUserComponent implements OnInit {
       serverSide: true,
       processing: true,
       ajax: (dataTablesParameters: any, callback) => {
-        this.http.get('http://localhost:8080/getAllUsers')
+        this.http.get('http://localhost:8088/getAllUsers')
          .pipe(
             map(res => res.json())
          ).subscribe(data => {
@@ -85,7 +85,7 @@ export class AddUserComponent implements OnInit {
   reset(){
     this.uservall = 'Add';
     this.cret = ' Created ';
-    this.http.get('http://localhost:8080/getAllUsers')
+    this.http.get('http://localhost:8088/getAllUsers')
          .pipe(
             map(res => res.json())
          ).subscribe(data => {
@@ -129,7 +129,7 @@ export class AddUserComponent implements OnInit {
 
   editUser(value){
     this.rest();
-    this.http.get('http://localhost:8080/getUserById/'+value)
+    this.http.get('http://localhost:8088/getUserById/'+value)
          .pipe(
             map(res => res.json())
          ).subscribe(data => {

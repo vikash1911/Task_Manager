@@ -197,7 +197,7 @@ export class AddTaskComponent implements OnInit {
     let task = {"task":this.taskname, "priority":this.value, "start_Date":this.startDate, "end_Date": this.endDate};
     const headers = new HttpHeaders().set("Content-Type",  "application/json");
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = "http://localhost:8080/7/tasks";
+    const url = "http://localhost:8088/7/tasks";
     this.http.post(proxyurl + url, task, {headers}).subscribe(
       (val) => {
         console.log("PUT successfull");

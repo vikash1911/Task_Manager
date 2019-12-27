@@ -14,7 +14,7 @@ export class AddProjectService implements AddProjectInt{
   constructor(private http: Http, public datepipe: DatePipe) { }
 
   fetchProjectAll(): Observable<any>{
-    return this.http.get('http://localhost:8080/getAllProjects')
+    return this.http.get('http://localhost:8088/getAllProjects')
          .pipe(
             map(res => res.json())
          )
@@ -28,12 +28,12 @@ export class AddProjectService implements AddProjectInt{
       let ss = this.datepipe.transform(tomorrow, 'yyyy-MM-dd');
       let ss1 = this.datepipe.transform(nextday, 'yyyy-MM-dd');
       var Pro = new Project(id,project.project, tomorrow, nextday, project.pro_priority,0, project.pro_user_id);
-    return this.http.post('http://localhost:8080/addProject', Pro)
+    return this.http.post('http://localhost:8088/addProject', Pro)
     .toPromise()
     .then(res=> res.json())
     }
     else{
-      return this.http.post('http://localhost:8080/addProject', project)
+      return this.http.post('http://localhost:8088/addProject', project)
     .toPromise()
     .then(res=> res.json())
     }
@@ -47,19 +47,19 @@ export class AddProjectService implements AddProjectInt{
       let ss = this.datepipe.transform(tomorrow, 'yyyy-MM-dd');
       let ss1 = this.datepipe.transform(nextday, 'yyyy-MM-dd');
       var Pro = new Project(id, project.project, tomorrow, nextday, project.pro_priority,0, project.pro_user_id);
-    return this.http.post('http://localhost:8080/updateProject/'+id, Pro)
+    return this.http.post('http://localhost:8088/updateProject/'+id, Pro)
     .toPromise()
     .then(res=> res.json())
     }
     else{
-      return this.http.post('http://localhost:8080/updateProject/'+id, project)
+      return this.http.post('http://localhost:8088/updateProject/'+id, project)
     .toPromise()
     .then(res=> res.json())
     }
   }
 
   fetchUserAll():Observable<any>{
-    return this.http.get('http://localhost:8080/getAllUsers')
+    return this.http.get('http://localhost:8088/getAllUsers')
     .pipe(
        map(res => res.json())
     )
